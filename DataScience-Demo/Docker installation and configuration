@@ -1,0 +1,26 @@
+#Docker installation and configuration 
+
+
+apt-get update && apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+apt --fix-broken install
+
+apt-get install docker.io=18\* -y
+
+docker version --format '{{.Server.Version}}'
+
+
+# Set up the Docker daemon with systemd
+cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+docker info | grep -i cgroup
+
+systemctl enable docker;systemctl start  docker

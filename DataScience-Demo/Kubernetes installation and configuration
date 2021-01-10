@@ -1,0 +1,59 @@
+#Kubernetes installation and configuration
+
+
+##Enable the br_netfilter module for cluster communication.
+echo "net/bridge/bridge-nf-call-ip6tables = 1" >> /etc/ufw/sysctl.conf
+echo "net/bridge/bridge-nf-call-iptables = 1" >> /etc/ufw/sysctl.conf
+echo "net/bridge/bridge-nf-call-arptables = 1" >> /etc/ufw/sysctl.conf
+
+modprobe br_netfilter
+echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+sysctl -p
+
+## Swap Disbaled
+swapoff -a
+sed -i -e 's|'/swap.img'|'#/swap.img'|' /etc/fstab
+
+
+#Adding Kubernetes  Repositery
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+apt-add-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+
+
+#Kubernetes Package installation
+apt-get install kubeadm=1.15\* kubelet=1.15\* kubeadm=1.15\* -y
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl
+
+cat > /etc/profile.d/kube.config <<EOF
+export KUBECONFIG=/etc/kubernetes/admin.conf
+EOF
+
+
+kubeadm init --pod-network-cidr=172.31.0.0/16 --apiserver-advertise-address=$(hostname -I | cut -d" " -f1)
+
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+## Network
+kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml
+
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+
+kubectl version --short
+
+#Verify the Kubernetes Enviorment
+kubectl cluster-info
+kubectl get pods --all-namespaces
+kubectl get nodes -o wide
+
+cat > /etc/profile.d/kube.alias <<EOF
+#!/bin/bash
+alias cluster='kubectl cluster-info;kubectl get nodes -o wide'
+alias status='kubectl get pods --all-namespaces'
+EOF
+
+echo "source /etc/profile.d/kube.alias" >> .bashrc
+

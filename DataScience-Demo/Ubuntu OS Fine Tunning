@@ -1,0 +1,34 @@
+#Ubuntu OS Fine Tunning
+# Time Zone Setup
+timedatectl set-timezone Asia/Kolkata
+timedatectl set-ntp no
+apt install ntp -y
+systemctl disable systemd-timesyncd
+
+#Disable Cloud Package 
+echo 'datasource_list: [ None ]' | sudo -s tee /etc/cloud/cloud.cfg.d/90_dpkg.cfg
+apt-get purge cloud-init -y
+rm -rf /etc/cloud/; sudo rm -rf /var/lib/cloud/
+echo "Package Installation Done"
+
+#Disable the unwanted Package
+systemctl disable apparmor cups cups-browsed speech-dispatcher spice-vdagent unattended-upgrades plymouth
+
+#Modify the deafult time value for service recovery 
+echo "DefaultTimeoutStartSec=5s" >> /etc/systemd/system.conf
+echo "DefaultTimeoutStopSec=5s" >> /etc/systemd/system.conf
+
+#Modify the SSH Configuration for root access
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+echo "UseDNS no" >> /etc/ssh/sshd_config
+
+#Modify Network Configuration
+sed -i '10s/^/            dhcp-identifier: mac\n/' /etc/netplan/50-cloud-init.yaml
+
+
+#Add the DNS 
+apt install resolvconf -y
+systemctl enable resolvconf.service
+systemctl start resolvconf.service
+echo "nameserver 8.8.8.8 " >> /etc/resolvconf/resolv.conf.d/head
+

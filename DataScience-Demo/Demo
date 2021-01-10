@@ -1,0 +1,13 @@
+Scalable DataScience Environment
+
+Environment Description
+
+ServerConfig: 4 Core, 8 GB RAM, 50 GB Storage, 1 G Network Port
+
+Operating System: Preinstalled with Ubuntu 18.04.4 LTS (Bionic Beaver) With SSH Server
+
+Server Hostname: server11.locuz
+
+Internet Connectivity
+
+Client: MobaXterm
