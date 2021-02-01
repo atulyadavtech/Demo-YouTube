@@ -1,0 +1,22 @@
+OpenSource Monitoring Stack
+
+ServerConfig: 2 Core, 4 GB RAM, 20 GB Storage, 1 G Network Port
+
+Operating System: Preinstalled RHEL 8.3 Minimal Installation With SSH Server 
+
+Internet Connectivity
+
+Client: MobaXterm
+
+Number of Server 4
+
+Server Hostname
+192.168.126.163 server11.local.host server11
+192.168.126.164 server22.local.host server22
+192.168.126.165 server33.local.host server33
+192.168.126.166 server44.local.host server44
+
+
+Operating System Detail
+Red Hat Enterprise Linux 8.3 Binary DVD
+SHA-256 Checksum: 30fd8dff2d29a384bd97886fa826fa5be872213c81e853eae3f9d9674f720ad0

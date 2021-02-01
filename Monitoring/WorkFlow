@@ -1,0 +1,18 @@
+##Dashboard Configuration
+
+
+Step1 : Install and configure Node Exporter Agent  
+
+Step2 : Install and configure Prometheus Time Series Database  
+
+Step3 : Configure the Prometheus for the Node Exporter metrics
+
+Step4 : Install and configure the Grafana Web interface.
+
+Step5 : Import/Add the Prometheus data source in the Grafana interface.
+
+Step6 : Create the Dashboard for the visualization  of node Node Exporter metrics.
+
+
+
+Step7 : Repeat "Step 1" and "Step 3" on  the new nodes for monitoring them

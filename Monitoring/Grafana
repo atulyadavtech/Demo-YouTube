@@ -1,0 +1,27 @@
+##Dashboard
+
+##Grafana  Visualization Dashboard
+
+wget https://dl.grafana.com/oss/release/grafana-7.3.7-1.x86_64.rpm
+
+yum install grafana-7.3.7-1.x86_64.rpm
+
+systemctl enable grafana-server
+
+systemctl restart  grafana-server 
+
+http://192.168.126.163:3000
+
+
+User Name : admin
+Password  : admin
+
+#Add the Data Source
+
+http://192.168.126.163:9090
+
+
+
+#Create the Dashboard for the visaulization of node Node Exporter metrics 
+
+import the "Node-Overview.json" file
