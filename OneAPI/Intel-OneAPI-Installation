@@ -1,0 +1,30 @@
+Objective: Intel OneAPI for HPC Infra (offline installer)
+Server Config : 8 Core, 16 GB RAM, 100 GB Storage
+Environment:   RHEL 8.3 Minimal Install OS With "Development Tools" group
+
+
+#Step 1: Download the required package
+wget https://registrationcenter-download.intel.com/akdlm/irc_nas/17431/l_BaseKit_p_2021.1.0.2659_offline.sh
+wget https://registrationcenter-download.intel.com/akdlm/irc_nas/17427/l_HPCKit_p_2021.1.0.2684_offline.sh 
+
+#Step 2:Install the base package
+bash l_BaseKit_p_2021.1.0.2659_offline.sh 
+
+#Step 3:Install the HPC package
+bash l_HPCKit_p_2021.1.0.2684_offline.sh
+
+#Step 4: Enable the Modules for the environment variable management.
+
+yum install environment-modules -y 
+bash /opt/intel/oneapi/modulefiles-setup.sh
+export MODULEPATH=/opt/intel/oneapi/modulefiles
+
+
+#Step 5: Verify the Intel Module
+module avail 
+
+#Step 6: Validate the enviorment
+module load compiler/latest
+module load mpi/latest
+icc -v;ifort -v;mpiicc -v;mpiifort -v;mpirun -V
+
